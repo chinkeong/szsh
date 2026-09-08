@@ -121,7 +121,9 @@
       font-size: 0.85rem;
       color: #666;
     }
-    #content td .cn { display: block; margin: 0.15rem 0 0; }
+    /* inline by default so mid-sentence Chinese does not break the line */
+    #content td .cn { display: inline; }
+    #content .cn-block { display: block; margin: 0.15rem 0 0; }
 
     #content .todo-tag {
       margin-left: 0.5rem;
@@ -201,87 +203,127 @@
       #content { color: #e8e8e8; }
       #content h2 { border-bottom-color: #3a3a3c; }
       #content .flight,
-    #content .stay,
-    #content .prep,
-    #content .day,
-    #content .eat,
-    #content .tips { border-color: #3a3a3c; }
-      #content .dates, #content .note, #content .todo, #content th { color: #9a9a9e; }
-      #content .cn {
-      margin: 0 0 0.6rem;
-      font-size: 0.85rem;
-      color: #666;
-    }
-    #content td .cn { display: block; margin: 0.15rem 0 0; }
-
-    #content .todo-tag {
-      margin-left: 0.5rem;
-      padding: 0.12rem 0.45rem;
-      border-radius: 999px;
-      background: #f0f0f0;
-      color: #777;
-      font-size: 0.68rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.03em;
-      vertical-align: middle;
+      #content .stay,
+      #content .prep,
+      #content .day,
+      #content .eat,
+      #content .tips { border-color: #3a3a3c; }
+      #content .dates,
+      #content .note,
+      #content .todo,
+      #content th { color: #9a9a9e; }
+      #content .cn { color: #9a9a9e; }
+      #content .sub { color: #9a9a9e; }
+      #content .todo-tag { background: #2c2c2e; color: #9a9a9e; }
+      #content .ok { background: #143d21; color: #6fcf8c; }
+      #content .warn { color: #e0b050; }
+      #content td.alert,
+      #content th.hour { color: #e0b050; }
+      #content .day tr + tr th,
+      #content .day tr + tr td,
+      #content .prep tr + tr th,
+      #content .prep tr + tr td,
+      #content .eat tr + tr th,
+      #content .eat tr + tr td { border-top-color: #2c2c2e; }
     }
 
-    #content .ok {
-      margin-left: 0.5rem;
-      padding: 0.12rem 0.45rem;
-      border-radius: 999px;
-      background: #e6f4ea;
-      color: #1e7b34;
-      font-size: 0.68rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.03em;
-      vertical-align: middle;
+    /* ---- mobile navigation ---- */
+    #topbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.55rem 0.9rem;
+      background: rgba(255,255,255,0.94);
+      backdrop-filter: saturate(180%) blur(10px);
+      -webkit-backdrop-filter: saturate(180%) blur(10px);
+      border-bottom: 1px solid #e2e2e2;
     }
+    #topbar[hidden] { display: none; }
 
-    #content .sub {
-      display: block;
-      margin-top: 0.3rem;
-      font-size: 0.82rem;
-      color: #666;
-    }
-
-    #content .day th,
-    #content .prep th,
-    #content .eat th { width: 7rem; }
-
-    #content .day tr + tr th,
-    #content .day tr + tr td,
-    #content .prep tr + tr th,
-    #content .prep tr + tr td,
-    #content .eat tr + tr th,
-    #content .eat tr + tr td {
-      border-top: 1px solid #eee;
-      padding-top: 0.6rem;
-    }
-
-    #content .tips ul {
-      margin: 0;
-      padding-left: 1.1rem;
-    }
-    #content .tips li {
-      margin-bottom: 0.55rem;
+    #topbar-title {
+      flex: 1;
       font-size: 0.9rem;
+      font-weight: 600;
+      color: #1a1a1a;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
-    #content .tips li:last-child { margin-bottom: 0; }
 
-    #content td.alert {
+    #jump {
+      flex: none;
+      padding: 0.35rem 0.7rem;
+      font: inherit;
+      font-size: 0.8rem;
       font-weight: 500;
-      color: #8a5a00;
+      color: #1a1a1a;
+      background: #f0f0f0;
+      border: 0;
+      border-radius: 999px;
+      cursor: pointer;
     }
+    #jump::after { content: " \25be"; }
+    #jump[aria-expanded="true"]::after { content: " \25b4"; }
 
-    #content th.hour {
-      color: #8a5a00;
-      font-weight: 700;
+    #toc {
+      position: fixed;
+      top: 2.9rem; left: 0; right: 0; bottom: 0;
+      z-index: 49;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      padding: 0.5rem 0 3rem;
+      background: #fff;
     }
+    #toc[hidden] { display: none; }
 
-    #content .warn { color: #e0b050; }
+    #toc a {
+      display: block;
+      padding: 0.7rem 1.1rem;
+      font-size: 0.95rem;
+      color: #1a1a1a;
+      text-decoration: none;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    #toc a.sub {
+      padding-left: 2.1rem;
+      font-size: 0.86rem;
+      color: #555;
+      margin: 0;
+    }
+    #toc a .cn { color: #888; font-size: 0.8em; }
+
+    #totop {
+      position: fixed;
+      right: 0.9rem; bottom: 1.1rem;
+      z-index: 40;
+      width: 2.6rem; height: 2.6rem;
+      font-size: 1rem;
+      line-height: 1;
+      color: #fff;
+      background: rgba(34,34,34,0.75);
+      border: 0;
+      border-radius: 50%;
+      cursor: pointer;
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
+    #totop[hidden] { display: none; }
+
+    /* clear the fixed bar when jumping to an anchor */
+    #content h2, #content h3 { scroll-margin-top: 3.6rem; }
+    #content.navpad { padding-top: 3.6rem; }
+
+    @media (prefers-color-scheme: dark) {
+      #topbar { background: rgba(28,28,30,0.94); border-bottom-color: #3a3a3c; }
+      #topbar-title { color: #e8e8e8; }
+      #jump { background: #2c2c2e; color: #e8e8e8; }
+      #toc { background: #1c1c1e; }
+      #toc a { color: #e8e8e8; border-bottom-color: #2c2c2e; }
+      #toc a.sub { color: #9a9a9e; }
+      #totop { background: rgba(240,240,240,0.8); color: #1c1c1e; }
     }
   </style>
 </head>
@@ -294,6 +336,13 @@
       <p id="error" role="alert"></p>
     </form>
   </div>
+
+  <header id="topbar" hidden>
+    <span id="topbar-title"></span>
+    <button id="jump" type="button" aria-expanded="false" aria-controls="toc">Jump to</button>
+  </header>
+  <nav id="toc" hidden aria-label="Sections"></nav>
+  <button id="totop" type="button" hidden aria-label="Back to top">&#8593;</button>
 
   <div id="content"></div>
 
@@ -373,7 +422,100 @@
       function reveal(plaintext) {
         content.innerHTML = new TextDecoder().decode(plaintext);
         gate.hidden = true;
+        buildNav();
       }
+
+      // ---- mobile navigation: sticky bar, jump menu, back-to-top ----
+      function slug(text, i) {
+        var base = text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+        return (base || 'section') + '-' + i;
+      }
+
+      function headingLabel(el) {
+        // drop status badges so the menu stays short
+        var clone = el.cloneNode(true);
+        var drop = clone.querySelectorAll('.ok, .todo-tag');
+        for (var i = 0; i < drop.length; i++) drop[i].parentNode.removeChild(drop[i]);
+        return clone.textContent.replace(/\s+/g, ' ').trim();
+      }
+
+      function buildNav() {
+        var topbar = document.getElementById('topbar');
+        var toc    = document.getElementById('toc');
+        var jump   = document.getElementById('jump');
+        var totop  = document.getElementById('totop');
+        var title  = document.getElementById('topbar-title');
+
+        var h1 = content.querySelector('h1');
+        title.textContent = h1 ? h1.textContent.trim() : 'Itinerary';
+
+        var nodes = content.querySelectorAll('h2, section.day > h3');
+        if (!nodes.length) return;
+
+        var html = '';
+        for (var i = 0; i < nodes.length; i++) {
+          var el = nodes[i];
+          var label = headingLabel(el);
+          if (!el.id) el.id = slug(label, i);
+          var cls = el.tagName === 'H3' ? ' class="sub"' : '';
+          html += '<a href="#' + el.id + '"' + cls + '>' +
+                  label.replace(/&/g, '&amp;').replace(/</g, '&lt;') + '</a>';
+        }
+        toc.innerHTML = html;
+
+        content.classList.add('navpad');
+        topbar.hidden = false;
+
+        function closeMenu() {
+          toc.hidden = true;
+          jump.setAttribute('aria-expanded', 'false');
+          document.body.style.overflow = '';
+        }
+
+        jump.addEventListener('click', function () {
+          var open = jump.getAttribute('aria-expanded') === 'true';
+          if (open) {
+            closeMenu();
+          } else {
+            toc.hidden = false;
+            jump.setAttribute('aria-expanded', 'true');
+            document.body.style.overflow = 'hidden';   // don't scroll the page behind
+          }
+        });
+
+        // tapping an entry jumps and closes
+        toc.addEventListener('click', function (e) {
+          if (e.target.tagName === 'A') closeMenu();
+        });
+
+        document.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape' && jump.getAttribute('aria-expanded') === 'true') closeMenu();
+        });
+
+        totop.addEventListener('click', function () {
+          var from = window.scrollY;
+          try {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          } catch (e) {
+            window.scrollTo(0, 0);
+          }
+          // smooth scrolling is a no-op when the OS asks for reduced motion,
+          // so jump outright if nothing moved.
+          setTimeout(function () {
+            if (window.scrollY === from) window.scrollTo(0, 0);
+            syncTopButton();
+          }, 300);
+        });
+
+        function syncTopButton() {
+          totop.hidden = window.scrollY < 600;
+        }
+        window.addEventListener('scroll', syncTopButton, { passive: true });
+        // an anchor jump does not reliably fire scroll, so sync on hash change too
+        window.addEventListener('hashchange', syncTopButton);
+        syncTopButton();
+      }
+
 
       // Cache the derived key, not the password, so a return visit skips both
       // the prompt and the (deliberately slow) PBKDF2 derivation.
