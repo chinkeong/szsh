@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Protected</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    }
+
+    #gate {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 1rem;
+      box-sizing: border-box;
+    }
+
+    /* Author `display: flex` above outranks the UA's [hidden] rule, so restate it. */
+    #gate[hidden] { display: none; }
+
+    #gate form {
+      width: 100%;
+      max-width: 20rem;
+      text-align: center;
+    }
+
+    #gate h1 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin: 0 0 1rem;
+    }
+
+    #gate input {
+      width: 100%;
+      padding: 0.6rem 0.7rem;
+      font-size: 1rem;
+      box-sizing: border-box;
+      border: 1px solid #bbb;
+      border-radius: 6px;
+    }
+
+    #gate button {
+      width: 100%;
+      margin-top: 0.6rem;
+      padding: 0.6rem;
+      font-size: 1rem;
+      border: 0;
+      border-radius: 6px;
+      background: #222;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    #gate button[disabled] { opacity: 0.6; cursor: default; }
+
+    #error {
+      min-height: 1.2rem;
+      margin-top: 0.6rem;
+      font-size: 0.85rem;
+      color: #c00;
+    }
+  </style>
+</head>
+<body>
+  <div id="gate" hidden>
+    <form id="gate-form">
+      <h1>Enter password</h1>
+      <input id="password" type="password" autocomplete="current-password">
+      <button id="submit" type="submit">Unlock</button>
+      <p id="error" role="alert"></p>
+    </form>
+  </div>
+
+  <div id="content"></div>
+
+  <script id="payload" type="application/json">__PAYLOAD__</script>
+
+  <script>
+    (function () {
+      var payload = JSON.parse(document.getElementById('payload').textContent);
+      var STORAGE_KEY = 'szsh-key';
+
+      var gate = document.getElementById('gate');
+      var content = document.getElementById('content');
+      var error = document.getElementById('error');
+      var form = document.getElementById('gate-form');
+      var input = document.getElementById('password');
+      var submit = document.getElementById('submit');
+
+      function b64ToBytes(b64) {
+        var bin = atob(b64);
+        var out = new Uint8Array(bin.length);
+        for (var i = 0; i < bin.length; i++) out[i] = bin.charCodeAt(i);
+        return out;
+      }
+
+      function bytesToB64(bytes) {
+        var bin = '';
+        var view = new Uint8Array(bytes);
+        for (var i = 0; i < view.length; i++) bin += String.fromCharCode(view[i]);
+        return btoa(bin);
+      }
+
+      // Web Crypto only exists in a secure context. Opening this file directly
+      // via file:// leaves crypto.subtle undefined, so say so rather than
+      // failing with an opaque error.
+      if (!window.crypto || !window.crypto.subtle) {
+        gate.hidden = false;
+        form.innerHTML = '<h1>Needs a secure connection</h1>' +
+          '<p style="font-size:.85rem;color:#555">This page decrypts in the browser, ' +
+          'which requires https:// or localhost. Opening the file directly from ' +
+          'disk will not work.</p>';
+        return;
+      }
+
+      // Must match normalise() in build.js: case and surrounding whitespace are
+      // folded so the same key is derived regardless of how it was typed.
+      function normalise(pw) {
+        return pw.trim().toLowerCase();
+      }
+
+      function deriveKey(password) {
+        return crypto.subtle.importKey(
+          'raw', new TextEncoder().encode(normalise(password)), 'PBKDF2', false, ['deriveKey']
+        ).then(function (base) {
+          return crypto.subtle.deriveKey(
+            {
+              name: 'PBKDF2',
+              salt: b64ToBytes(payload.salt),
+              iterations: payload.iterations,
+              hash: 'SHA-256'
+            },
+            base,
+            { name: 'AES-GCM', length: 256 },
+            true,               // extractable, so the key can be cached below
+            ['decrypt']
+          );
+        });
+      }
+
+      function decrypt(key) {
+        return crypto.subtle.decrypt(
+          { name: 'AES-GCM', iv: b64ToBytes(payload.iv) },
+          key,
+          b64ToBytes(payload.ciphertext)
+        );
+      }
+
+      function reveal(plaintext) {
+        content.innerHTML = new TextDecoder().decode(plaintext);
+        gate.hidden = true;
+      }
+
+      // Cache the derived key, not the password, so a return visit skips both
+      // the prompt and the (deliberately slow) PBKDF2 derivation.
+      function remember(key) {
+        return crypto.subtle.exportKey('raw', key).then(function (raw) {
+          try {
+            localStorage.setItem(STORAGE_KEY, bytesToB64(raw));
+          } catch (e) {
+            /* Unlocked for this visit; we just cannot persist it. */
+          }
+        });
+      }
+
+      function cachedKey() {
+        var stored;
+        try {
+          stored = localStorage.getItem(STORAGE_KEY);
+        } catch (e) {
+          return Promise.reject();
+        }
+        if (!stored) return Promise.reject();
+        return crypto.subtle.importKey(
+          'raw', b64ToBytes(stored), { name: 'AES-GCM' }, true, ['decrypt']
+        );
+      }
+
+      function askForPassword() {
+        gate.hidden = false;
+        input.focus();
+      }
+
+      // A wrong password fails AES-GCM's authentication check, so a rejected
+      // decrypt IS the wrong-password signal. No separate comparison needed.
+      cachedKey()
+        .then(decrypt)
+        .then(reveal)
+        .catch(function () {
+          try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
+          askForPassword();
+        });
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var attempt = input.value;
+
+        error.textContent = '';
+        submit.disabled = true;
+        submit.textContent = 'Unlocking\u2026';
+
+        deriveKey(attempt)
+          .then(function (key) {
+            return decrypt(key).then(function (plaintext) {
+              return remember(key).then(function () { reveal(plaintext); });
+            });
+          })
+          .catch(function () {
+            error.textContent = 'Wrong password.';
+            input.value = '';
+            input.focus();
+          })
+          .then(function () {
+            submit.disabled = false;
+            submit.textContent = 'Unlock';
+          });
+      });
+    })();
+  </script>
+</body>
+</html>
