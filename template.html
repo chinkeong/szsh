@@ -63,6 +63,136 @@
       font-size: 0.85rem;
       color: #c00;
     }
+
+    /* Content */
+    #content {
+      max-width: 34rem;
+      margin: 0 auto;
+      padding: 1.5rem 1.1rem 4rem;
+      line-height: 1.5;
+      color: #1a1a1a;
+    }
+
+    #content h1 { font-size: 1.5rem; margin: 0 0 0.2rem; }
+    #content h2 {
+      font-size: 1.05rem;
+      margin: 2rem 0 0.6rem;
+      padding-bottom: 0.3rem;
+      border-bottom: 1px solid #e2e2e2;
+    }
+    #content h3 { font-size: 0.95rem; margin: 0 0 0.5rem; }
+
+    #content .dates { margin: 0 0 1.5rem; color: #666; }
+    #content .note, #content .todo {
+      font-size: 0.88rem;
+      color: #666;
+    }
+
+    #content .flight,
+    #content .stay {
+      margin: 0 0 1.2rem;
+      padding: 0.9rem 1rem;
+      border: 1px solid #e2e2e2;
+      border-radius: 8px;
+    }
+
+    #content table { width: 100%; border-collapse: collapse; }
+    #content th {
+      width: 5.5rem;
+      text-align: left;
+      vertical-align: top;
+      padding: 0.35rem 0.6rem 0.35rem 0;
+      font-weight: 500;
+      font-size: 0.8rem;
+      color: #777;
+    }
+    #content td {
+      vertical-align: top;
+      padding: 0.35rem 0;
+      font-size: 0.92rem;
+    }
+
+    #content .cn {
+      margin: 0 0 0.6rem;
+      font-size: 0.85rem;
+      color: #666;
+    }
+    #content td .cn { display: block; margin: 0.15rem 0 0; }
+
+    #content .todo-tag {
+      margin-left: 0.5rem;
+      padding: 0.12rem 0.45rem;
+      border-radius: 999px;
+      background: #f0f0f0;
+      color: #777;
+      font-size: 0.68rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      vertical-align: middle;
+    }
+
+    #content .ok {
+      margin-left: 0.5rem;
+      padding: 0.12rem 0.45rem;
+      border-radius: 999px;
+      background: #e6f4ea;
+      color: #1e7b34;
+      font-size: 0.68rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      vertical-align: middle;
+    }
+
+    #content .warn {
+      margin: 0.7rem 0 0;
+      font-size: 0.85rem;
+      color: #8a5a00;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      body { background: #1c1c1e; }
+      #content { color: #e8e8e8; }
+      #content h2 { border-bottom-color: #3a3a3c; }
+      #content .flight,
+    #content .stay { border-color: #3a3a3c; }
+      #content .dates, #content .note, #content .todo, #content th { color: #9a9a9e; }
+      #content .cn {
+      margin: 0 0 0.6rem;
+      font-size: 0.85rem;
+      color: #666;
+    }
+    #content td .cn { display: block; margin: 0.15rem 0 0; }
+
+    #content .todo-tag {
+      margin-left: 0.5rem;
+      padding: 0.12rem 0.45rem;
+      border-radius: 999px;
+      background: #f0f0f0;
+      color: #777;
+      font-size: 0.68rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      vertical-align: middle;
+    }
+
+    #content .ok {
+      margin-left: 0.5rem;
+      padding: 0.12rem 0.45rem;
+      border-radius: 999px;
+      background: #e6f4ea;
+      color: #1e7b34;
+      font-size: 0.68rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      vertical-align: middle;
+    }
+
+    #content .warn { color: #e0b050; }
+    }
   </style>
 </head>
 <body>
