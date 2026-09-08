@@ -89,7 +89,11 @@
     }
 
     #content .flight,
-    #content .stay {
+    #content .stay,
+    #content .prep,
+    #content .day,
+    #content .eat,
+    #content .tips {
       margin: 0 0 1.2rem;
       padding: 0.9rem 1rem;
       border: 1px solid #e2e2e2;
@@ -145,6 +149,37 @@
       vertical-align: middle;
     }
 
+    #content .sub {
+      display: block;
+      margin-top: 0.3rem;
+      font-size: 0.82rem;
+      color: #666;
+    }
+
+    #content .day th,
+    #content .prep th,
+    #content .eat th { width: 7rem; }
+
+    #content .day tr + tr th,
+    #content .day tr + tr td,
+    #content .prep tr + tr th,
+    #content .prep tr + tr td,
+    #content .eat tr + tr th,
+    #content .eat tr + tr td {
+      border-top: 1px solid #eee;
+      padding-top: 0.6rem;
+    }
+
+    #content .tips ul {
+      margin: 0;
+      padding-left: 1.1rem;
+    }
+    #content .tips li {
+      margin-bottom: 0.55rem;
+      font-size: 0.9rem;
+    }
+    #content .tips li:last-child { margin-bottom: 0; }
+
     #content .warn {
       margin: 0.7rem 0 0;
       font-size: 0.85rem;
@@ -156,7 +191,11 @@
       #content { color: #e8e8e8; }
       #content h2 { border-bottom-color: #3a3a3c; }
       #content .flight,
-    #content .stay { border-color: #3a3a3c; }
+    #content .stay,
+    #content .prep,
+    #content .day,
+    #content .eat,
+    #content .tips { border-color: #3a3a3c; }
       #content .dates, #content .note, #content .todo, #content th { color: #9a9a9e; }
       #content .cn {
       margin: 0 0 0.6rem;
@@ -190,6 +229,37 @@
       letter-spacing: 0.03em;
       vertical-align: middle;
     }
+
+    #content .sub {
+      display: block;
+      margin-top: 0.3rem;
+      font-size: 0.82rem;
+      color: #666;
+    }
+
+    #content .day th,
+    #content .prep th,
+    #content .eat th { width: 7rem; }
+
+    #content .day tr + tr th,
+    #content .day tr + tr td,
+    #content .prep tr + tr th,
+    #content .prep tr + tr td,
+    #content .eat tr + tr th,
+    #content .eat tr + tr td {
+      border-top: 1px solid #eee;
+      padding-top: 0.6rem;
+    }
+
+    #content .tips ul {
+      margin: 0;
+      padding-left: 1.1rem;
+    }
+    #content .tips li {
+      margin-bottom: 0.55rem;
+      font-size: 0.9rem;
+    }
+    #content .tips li:last-child { margin-bottom: 0; }
 
     #content .warn { color: #e0b050; }
     }
