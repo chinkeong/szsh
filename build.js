@@ -17,7 +17,13 @@ if (!password) {
 }
 
 const dir = __dirname;
-const content = fs.readFileSync(path.join(dir, 'content.html'), 'utf8');
+const contentPath = path.join(dir, 'content.html');
+if (!fs.existsSync(contentPath)) {
+  console.error('content.html not found. Start from the example:');
+  console.error('  cp content.example.html content.html');
+  process.exit(1);
+}
+const content = fs.readFileSync(contentPath, 'utf8');
 const template = fs.readFileSync(path.join(dir, 'template.html'), 'utf8');
 
 // Must match normalise() in template.html, or the browser derives a different key.
