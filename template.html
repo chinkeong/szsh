@@ -331,6 +331,54 @@
       #toc a.sub { color: #9a9a9e; }
       #totop { background: rgba(240,240,240,0.8); color: #1c1c1e; }
     }
+
+    /* ---- inline SVG diagrams, sized for a phone ---- */
+    #content .diagram {
+      margin: 1rem 0 1.2rem;
+    }
+    #content .diagram svg {
+      display: block;
+      width: 100%;
+      height: auto;
+      max-width: 430px;
+      margin: 0 auto;
+      overflow: visible;
+    }
+    #content .diagram figcaption {
+      margin: 0.4rem 0 0;
+      font-size: 0.8rem;
+      color: #666;
+      text-align: center;
+    }
+
+    .d-box   { fill: #f6f6f6; stroke: #dcdcdc; stroke-width: 1; }
+    .d-key   { fill: #eaf2fd; stroke: #a9c8ef; stroke-width: 1; }
+    .d-warn  { fill: #fdf4e3; stroke: #e6c684; stroke-width: 1; }
+    .d-good  { fill: #e8f5ec; stroke: #a2d3b4; stroke-width: 1; }
+    .d-rail  { stroke: #c9c9c9; stroke-width: 2; fill: none; }
+    .d-dot   { fill: #fff; stroke: #8a8a8a; stroke-width: 2; }
+    .d-dotk  { fill: #0068b5; stroke: #0068b5; stroke-width: 2; }
+
+    .d-t  { fill: #1a1a1a; font-size: 12px; font-weight: 600; }
+    .d-n  { fill: #333;    font-size: 11px; }
+    .d-s  { fill: #6b6b6b; font-size: 10px; }
+    .d-w  { fill: #8a5a00; font-size: 10.5px; font-weight: 600; }
+    #content .diagram text { font-family: inherit; }
+
+    @media (prefers-color-scheme: dark) {
+      #content .diagram figcaption { color: #9a9a9e; }
+      .d-box  { fill: #232325; stroke: #3a3a3c; }
+      .d-key  { fill: #16283d; stroke: #2f5480; }
+      .d-warn { fill: #2e2410; stroke: #6b551f; }
+      .d-good { fill: #14281c; stroke: #2f5c3f; }
+      .d-rail { stroke: #4a4a4c; }
+      .d-dot  { fill: #1c1c1e; stroke: #8a8a8e; }
+      .d-dotk { fill: #4da3e8; stroke: #4da3e8; }
+      .d-t { fill: #e8e8e8; }
+      .d-n { fill: #d0d0d0; }
+      .d-s { fill: #9a9a9e; }
+      .d-w { fill: #e0b050; }
+    }
   </style>
 </head>
 <body>
