@@ -404,6 +404,22 @@
       .d-s { fill: #9a9a9e; }
       .d-w { fill: #e0b050; }
     }
+
+    /* ---- route diagrams ---- */
+    .r-line { stroke: #d0021b; stroke-width: 4; stroke-linecap: round; }
+    .r-dot  { fill: #d0021b; stroke: #fff; stroke-width: 2; }
+    .r-num  { fill: #fff; font-size: 9px; font-weight: 700; text-anchor: middle; }
+    .r-name { fill: #0a58ca; font-size: 15.5px; font-weight: 600; text-decoration: underline; }
+    .r-time { fill: #6b6b6b; font-size: 12.5px; }
+    .r-conn { fill: #8a8a8a; font-size: 11.5px; }
+    #content .diagram svg a { cursor: pointer; }
+
+    @media (prefers-color-scheme: dark) {
+      .r-dot  { stroke: #1c1c1e; }
+      .r-name { fill: #6ea8fe; }
+      .r-time { fill: #9a9a9e; }
+      .r-conn { fill: #7a7a7e; }
+    }
   </style>
 </head>
 <body>
