@@ -420,6 +420,51 @@
       .r-time { fill: #9a9a9e; }
       .r-conn { fill: #7a7a7e; }
     }
+
+    /* ---- geographic maps ---- */
+    .m-land   { fill: #f4f1ea; stroke: #e0dbd0; }
+    .m-old    { fill: #eae5d8; stroke: #d6cfbe; }
+    .m-sea    { fill: #dbe9f2; }
+    .m-sea-t  { fill: #7f9db0; font-size: 12px; text-anchor: middle; }
+    .m-river  { fill: none; stroke: #a8cbe0; stroke-width: 7; }
+    .m-river-w{ fill: none; stroke: #a8cbe0; stroke-width: 13; }
+    .m-river-t{ fill: #6f97ad; font-size: 11.5px; }
+    .m-compass line { stroke: #8a8a8a; stroke-width: 1.5; }
+    .m-compass path { fill: #8a8a8a; }
+    .m-n      { fill: #6b6b6b; font-size: 11px; text-anchor: middle; font-weight: 700; }
+    .m-dir    { fill: #8a8a8a; font-size: 12px; }
+    .m-dot     { fill: #fff; stroke: #7a7a7a; stroke-width: 2.5; }
+    .m-dot-key { fill: #d0021b; stroke: #fff; stroke-width: 2.5; }
+    .m-dot-a   { fill: #0068b5; stroke: #fff; stroke-width: 2.5; }
+    .m-dot-b   { fill: #1e7b34; stroke: #fff; stroke-width: 2.5; }
+    .m-place  { fill: #1a1a1a; font-size: 15px; font-weight: 700; text-anchor: middle; }
+    .m-place2 { fill: #1a1a1a; font-size: 14px; font-weight: 700; text-anchor: middle; }
+    .m-sub    { fill: #6b6b6b; font-size: 11.5px; text-anchor: middle; }
+    .m-route  { fill: none; stroke: #d0021b; stroke-width: 3; stroke-dasharray: 7 4; }
+    .m-arrow  { fill: #d0021b; }
+    .m-leg    { fill: #d0021b; font-size: 12px; font-weight: 600; text-anchor: middle; }
+    .m-leg2   { fill: #6b6b6b; font-size: 11.5px; text-anchor: middle; }
+    .m-walk   { fill: none; stroke: #9a9a9a; stroke-width: 2; stroke-dasharray: 4 3; }
+    .m-note   { fill: #1a1a1a; font-size: 13px; font-weight: 600; }
+    .m-key-a  { fill: #e8f0fa; stroke: #b8d0ea; }
+    .m-key-b  { fill: #e8f5ec; stroke: #a2d3b4; }
+    .m-key-t  { fill: #1a1a1a; font-size: 12.5px; font-weight: 700; }
+
+    @media (prefers-color-scheme: dark) {
+      .m-land { fill: #26241f; stroke: #3a372f; }
+      .m-old  { fill: #302d25; stroke: #454034; }
+      .m-sea  { fill: #1b2a35; }
+      .m-river, .m-river-w { stroke: #2f5266; }
+      .m-place, .m-place2, .m-note { fill: #e8e8e8; }
+      .m-sub, .m-leg2, .m-dir { fill: #9a9a9e; }
+      .m-dot { fill: #1c1c1e; stroke: #9a9a9e; }
+      .m-dot-key { stroke: #1c1c1e; }
+      .m-dot-a, .m-dot-b { stroke: #1c1c1e; }
+      .m-key-a { fill: #16283d; stroke: #2f5480; }
+      .m-key-b { fill: #14281c; stroke: #2f5c3f; }
+      .m-key-t { fill: #e8e8e8; }
+      .m-n { fill: #9a9a9e; }
+    }
   </style>
 </head>
 <body>
