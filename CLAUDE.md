@@ -41,6 +41,14 @@ Any hit means it leaked. Do not push.
 - The page needs https:// or localhost — Web Crypto is unavailable on
   `file://`, so a page that "does not work" locally is usually just that.
 
+## Skills
+- `.claude/skills/china-trip-planner/` holds the China travel know-how distilled
+  from building this itinerary — verification rules, booking windows, payment
+  rails, and two self-testing scripts for Baidu map links and route diagrams.
+  Use it rather than re-deriving. A copy also lives at
+  `~/.claude/skills/` so it applies outside this repo; treat the repo copy as
+  the source of truth.
+
 ## Branches
 - `main` — the live trip.
 - `template` — clean reusable scaffold for the next trip. Branch from it, then
